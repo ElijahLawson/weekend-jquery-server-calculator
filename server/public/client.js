@@ -38,16 +38,16 @@ function renderResultToDom() {
         let mostRecentGuessObject;
 
         $('#result-section').empty();
-
+        $('#history-list').empty();
 
         $('#first-number-input').val('');
         $('#second-number-input').val('');
         
         for (i in calculations) {
-            $('#history-list').append(`<li>${Number(i)+1}. ${calculations[i][i].expression} = ${calculations[i][i].answer}</li>`)
+            $('#history-list').append(`<li>${calculations[i][i].expression} = ${calculations[i][i].answer}</li>`)
         }
-        mostRecentGuessObject = calculations[calculations.length - 1];
-        mostRecentAnswer = mostRecentGuessObject[Object.keys(mostRecentGuessObject)[0]].answer;
+        mostRecentAnswerObject = calculations[calculations.length - 1];
+        mostRecentAnswer = mostRecentAnswerObject[Object.keys(mostRecentAnswerObject)[0]].answer;
         
         $('#result-section').append(`<h1>${mostRecentAnswer}</h1>`)
     })

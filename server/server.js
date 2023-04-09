@@ -18,11 +18,11 @@ let counter = 0;
 
 // {
 //     firstNumber: first-number-Input.val(),
-//     operand: number based off ,
+//     operator: number based off ,
 //     secondNumber: second-number-input.val()
 // }
 
-//On the server, it will be calculated based of operand number
+//On the server, it will be calculated based of operator symbol.
 //Then return an object to the dom that will look like this:
 
 // {
@@ -44,10 +44,11 @@ app.get('/expression', (req, res) => {
 
 app.post('/expression', (req, res) => {
     let calculatedAnswer;
-    let calculationDataToReturn = {};
-    let firstNumber = Number(req.body.firstNumber);
-    let operator = req.body.operator;
-    let secondNumber = Number(req.body.secondNumber);
+    let expressionObject = req.body;
+    let calculationDataToPush = {};
+    let firstNumber = Number(expressionObject.firstNumber);
+    let operator = expressionObject.operator;
+    let secondNumber = Number(expressionObject.secondNumber);
 
     switch (operator) {
         case '+':
@@ -63,14 +64,14 @@ app.post('/expression', (req, res) => {
             calculatedAnswer = firstNumber / secondNumber;
     }
 
-    calculationDataToReturn[counter] = {
+    calculationDataToPush[counter] = {
         expression: `${firstNumber} ${operator} ${secondNumber}`,
         answer: calculatedAnswer
     }
 
-    calculationsArray.push(calculationDataToReturn);
+    calculationsArray.push(calculationDataToPush);
 
     counter++;
     
-    res.send('The expression was posted from the DOM to the Server')
+    res.send('The expression was posted from the DOM to the Server');
 });
