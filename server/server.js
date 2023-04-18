@@ -50,6 +50,15 @@ app.post('/expression', (req, res) => {
     let operator = expressionObject.operator;
     let secondNumber = Number(expressionObject.secondNumber);
 
+    calculatedAnswer = determineOperator(operator, firstNumber, secondNumber);
+    buildObjectToPush(firstNumber, operator, secondNumber, calculatedAnswer);
+
+    
+    res.send('The expression was posted from the DOM to the Server');
+});
+
+function determineOperator(operator, firstNumber, secondNumber) {
+    let calculatedAnswer;
     switch (operator) {
         case '+':
             calculatedAnswer = firstNumber + secondNumber;
@@ -64,6 +73,10 @@ app.post('/expression', (req, res) => {
             calculatedAnswer = firstNumber / secondNumber;
     }
 
+    return calculatedAnswer;
+}
+
+function buildObjectToPush(firstNumber, operator, secondNumber, calculatedAnswer) {
     calculationDataToPush[counter] = {
         expression: `${firstNumber} ${operator} ${secondNumber}`,
         answer: calculatedAnswer
@@ -72,6 +85,4 @@ app.post('/expression', (req, res) => {
     calculationsArray.push(calculationDataToPush);
 
     counter++;
-    
-    res.send('The expression was posted from the DOM to the Server');
-});
+}
